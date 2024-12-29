@@ -80,7 +80,7 @@
                 countdownElement.style.display = 'none';
                 messageElement.style.display = 'block';
                 linkButton.style.display = 'inline-block';
-                updateTargetDate();
+                setTimeout(updateTargetDate, 24 * 60 * 60 * 1000); // Aggiorna il targetDate dopo 24 ore
                 return;
             }
 
@@ -95,10 +95,13 @@
         const updateTargetDate = () => {
             const now = new Date();
             let newYear = now.getFullYear();
-            if (now > targetDate) {
+            if (now.getMonth() > 8 || (now.getMonth() === 8 && now.getDate() > 30)) {
                 newYear++;
             }
             targetDate = new Date(`September 30, ${newYear} 00:00:00`).getTime();
+            countdownElement.style.display = 'block';
+            messageElement.style.display = 'none';
+            linkButton.style.display = 'none';
         };
 
         setInterval(updateCountdown, 1000);
