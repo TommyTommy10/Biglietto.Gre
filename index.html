@@ -6,7 +6,7 @@
     <title>Countdown</title>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Selima&display=swap" rel="stylesheet">
-    <link rel="icon" href=" https://github.com/TommyTommy10/Biglietto.Gre/raw/main/5b62c841-4a38-4c19-b39a-1fe846f3da78.jpg" type="image/x-icon">
+    <link rel="icon" href="https://github.com/TommyTommy10/Biglietto.Gre/raw/main/5b62c841-4a38-4c19-b39a-1fe846f3da78.jpg" type="image/x-icon">
     <style>
         body {
             background: linear-gradient(45deg, red, yellow, green, blue, purple);
@@ -70,17 +70,35 @@
         const messageElement = document.getElementById('message');
         const linkButton = document.getElementById('linkButton');
 
-        const targetDate = new Date('2024-09-31T00:00:00').getTime();
-        const targetDate = new Date('2024-09-30T00:00:00').getTime();
+        let targetDate = new Date('2024-09-30T00:00:00').getTime();
 
         const updateCountdown = () => {
             const now = new Date().getTime();
-@@ -88,10 +88,10 @@
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                countdownElement.style.display = 'none';
+                messageElement.style.display = 'block';
+                linkButton.style.display = 'inline-block';
+                updateTargetDate();
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            countdownElement.innerHTML = `${days} Giorni ${hours} Ore ${minutes} Minuti ${seconds}Secondi`;
             countdownElement.innerHTML = `${days} Giorni ${hours} Ore ${minutes} Minuti ${seconds} Secondi`;
+        };
+
+        const updateTargetDate = () => {
+            const now = new Date();
+            let newYear = now.getFullYear();
+            if (now > targetDate) {
+                newYear++;
+            }
+            targetDate = new Date(`September 30, ${newYear} 00:00:00`).getTime();
         };
 
         setInterval(updateCountdown, 1000);
